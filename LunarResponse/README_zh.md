@@ -81,7 +81,7 @@ r(km)  vp(km/s)  vs(km/s)  rho(g/cm^3)  Q_kappa  Q_mu
 
 - **A 类 `T_A`**：Dyson力（Dyson forcing）驱动下的表面位移响应；
 - **B 类 `T_B`**：引潮力驱动下的表面位移响应。其与A类的变换系数为 `0.5·R`（径向）、
-  `0.25·R`（切向，l=2）；|T_B − 变换系数|` 与 A 类量级相近。参加论文 https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.064092
+  `0.25·R`（切向，l=2）；|T_B − 变换系数|` 与 A 类量级相近。参见论文 https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.064092
 
 `compact` 格式 5 列：`freq, T_A_r, T_A_h, |T_B_r−0.5R|, |T_B_h−0.25R|`；
 `full` 格式额外包含未做变换的 `|T_B_r|`、`|T_B_h|`。输出文件头中写有明确定义。
