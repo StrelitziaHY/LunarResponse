@@ -377,7 +377,7 @@ class ResponseCalculator:
                  db_dir="db25new", l_degree=2,
                  static_rad=0.5, static_hor=0.25):
         """
-        static_rad/static_hor: B 类（引潮）响应的静态极限系数（乘 R）。
+        static_rad/static_hor: B 类（引潮）响应到A类的变换系数（乘 R）。
         默认 0.5 / 0.25 为 l=2 的值；|T_B - coef*R| 即动力学 B 类响应，
         其量级与 A 类（Dyson 体力）响应相近，便于对比。
         """
@@ -466,13 +466,13 @@ def save_response(results, path, l, save_format="compact",
 
     save_format:
       "compact" — 5 列（兼容原 RespF 格式）：freq, A类径向, A类切向,
-                  B类径向(减静态), B类切向(减静态)
-      "full"    — 7 列：额外包含未减静态的 B 类响应 |T_B_r|, |T_B_h|
+                  B类径向(减系数), B类切向(减系数)
+      "full"    — 7 列：额外包含未减系数的 B 类响应 |T_B_r|, |T_B_h|
     两类响应定义：
       A 类（T_A）：Dyson 体力（direct body forcing）驱动下的表面位移响应；
-      B 类（T_B）：引潮位（tidal potential）驱动下的表面位移响应，
-                  其静态极限分别为 static_rad*R（径向）和 static_hor*R（切向），
-                  减去静态极限后与 A 类量级相近。
+      B 类（T_B）：引潮力（tidal forcing）驱动下的表面位移响应，
+                  其变换系数分别为 static_rad*R（径向）和 static_hor*R（切向），
+                  减去变换系数后与 A 类量级相近。
     """
     if save_format == "full":
         header = (
@@ -640,12 +640,12 @@ def main(argv=None):
         # --- 响应输出 ---
         p.add_argument("--l", type=int, default=2, help="响应计算的球谐度")
         p.add_argument("--static-rad", type=float, default=0.5,
-                       help="B类径向静态极限系数（乘R，l=2 为 0.5）")
+                       help="B类径向变换系数（乘R，l=2 为 0.5）")
         p.add_argument("--static-hor", type=float, default=0.25,
-                       help="B类切向静态极限系数（乘R，l=2 为 0.25）")
+                       help="B类切向变换系数（乘R，l=2 为 0.25）")
         p.add_argument("--save-format", choices=["compact", "full"],
                        default="compact",
-                       help="compact=5列(兼容旧格式) / full=7列(含未减静态的B类)")
+                       help="compact=5列(兼容旧格式) / full=7列(含未减变换系数的B类)")
         p.add_argument("--save", default="response_functions.txt")
         p.add_argument("--freq", default=None, help="自定义频率数组文件")
         p.add_argument("--no-plot", action="store_true")
