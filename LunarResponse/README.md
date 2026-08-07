@@ -1,4 +1,4 @@
-# LunarResponse
+# LunarResponse v1.0
 
 [中文说明](README_zh.md)
 
