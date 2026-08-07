@@ -3,10 +3,10 @@
 [中文说明](README_zh.md)
 
 **Lunar surface response functions from an interior model, in one command.**
-Given a lunar (or planetary) interior model, this package refines the model,
+Given a lunar (or planetary) interior 1D model, this package refines the model,
 computes its free oscillations with a modified [MINEOS](https://github.com/geodynamics/mineos)
 kernel, and sums the normal modes into frequency-dependent surface displacement
-response functions — both A-type (Dyson body forcing) and B-type (tidal potential
+response functions — both A-type (Dyson forcing) and B-type (tidal
 forcing) — ready for gravitational-wave / tidal response studies.
 
 ```bash
@@ -80,7 +80,7 @@ MINEOS header as `nic/noc` automatically).
 | `--lmin`, `--lmax` | Angular-degree range | 2, 2 |
 | `--eps` | Runge–Kutta integration accuracy (toroidal: do not go below ~2e-4) | 1e-8 |
 | `--save-format` | `compact` (5 columns) or `full` (7 columns, incl. raw \|T_B\|) | compact |
-| `--static-rad`, `--static-hor` | B-type static-limit coefficients (×R; l=2 values are 0.5 / 0.25) | 0.5, 0.25 |
+| `--static-rad`, `--static-hor` | B-A transform coefficients (×R; l=2 values are 0.5 / 0.25) | 0.5, 0.25 |
 
 Run `python lunar_response.py <command> -h` for the full list.
 
@@ -88,9 +88,9 @@ Run `python lunar_response.py <command> -h` for the full list.
 
 - **A-type `T_A`** — surface displacement response to a *direct body force*
   (Dyson forcing).
-- **B-type `T_B`** — response to a *tidal potential*. Its static limits are
-  `0.5·R` (radial) and `0.25·R` (horizontal) for l=2; the dynamic part
-  `|T_B − static|` is comparable in magnitude to the A-type response.
+- **B-type `T_B`** — response to a *tidal force*. Its transform coefficients are
+  `0.5·R` (radial) and `0.25·R` (horizontal) for l=2; 
+  `|T_B − transform coefficient|` is comparable in magnitude to the A-type response. See our paper: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.064092
 
 `compact` format: `freq, T_A_r, T_A_h, |T_B_r−0.5R|, |T_B_h−0.25R|`.
 `full` format adds the unsubtracted `|T_B_r|`, `|T_B_h|`.
