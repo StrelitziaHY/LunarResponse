@@ -3,10 +3,9 @@
 [English README](README.md)
 
 **从内部结构模型到月表响应曲线，一条命令完成。**
-输入月球（或行星）内部结构模型，本程序自动完成：模型插值加密 → 用修改版
+输入月球（或行星）内部一维结构模型，本程序自动完成：模型插值加密 → 用修改版
 MINEOS 计算自由振荡本征模式 → 模式叠加得到随频率变化的月表位移响应函数，
-包括 A 类（Dyson 体力驱动）与 B 类（引潮位驱动）响应，适用于引力波 /
-引潮响应研究。
+包括 A 类（Dyson 力驱动）与 B 类（引潮力驱动）响应，适用于引力波月球响应的简化研究。
 
 ```bash
 python lunar_response.py all --model examples/MoonModelSimp.txt --name demo --out run_demo
@@ -74,18 +73,18 @@ r(km)  vp(km/s)  vs(km/s)  rho(g/cm^3)  Q_kappa  Q_mu
 | `--lmin`, `--lmax` | 角阶数范围 | 2, 2 |
 | `--eps` | Runge–Kutta 积分精度（环型模式不宜小于 ~2e-4） | 1e-8 |
 | `--save-format` | `compact`（5 列）或 `full`（7 列，含未减静态的 B 类） | compact |
-| `--static-rad`, `--static-hor` | B 类静态极限系数（×R；l=2 时为 0.5 / 0.25） | 0.5, 0.25 |
+| `--static-rad`, `--static-hor` | B-A 类变换系数（×R；l=2 时为 0.5 / 0.25） | 0.5, 0.25 |
 
 完整参数列表见 `python lunar_response.py <子命令> -h`。
 
 ## 输出约定：A 类与 B 类响应
 
-- **A 类 `T_A`**：直接体力（Dyson forcing）驱动下的表面位移响应；
-- **B 类 `T_B`**：引潮位驱动下的表面位移响应。其静态极限为 `0.5·R`（径向）、
-  `0.25·R`（切向，l=2）；动力学部分 `|T_B − 静态极限|` 与 A 类量级相近。
+- **A 类 `T_A`**：Dyson力（Dyson forcing）驱动下的表面位移响应；
+- **B 类 `T_B`**：引潮力驱动下的表面位移响应。其与A类的变换系数为 `0.5·R`（径向）、
+  `0.25·R`（切向，l=2）；|T_B − 变换系数|` 与 A 类量级相近。参加论文 https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.064092
 
 `compact` 格式 5 列：`freq, T_A_r, T_A_h, |T_B_r−0.5R|, |T_B_h−0.25R|`；
-`full` 格式额外包含未减静态的 `|T_B_r|`、`|T_B_h|`。输出文件头中写有明确定义。
+`full` 格式额外包含未做变换的 `|T_B_r|`、`|T_B_h|`。输出文件头中写有明确定义。
 
 ## 重新编译 MINEOS / 调整层数上限
 
